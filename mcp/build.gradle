@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.11'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'mcp project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+    // maven { url = 'https://repo.spring.io/milestone' }
+	// maven { url = uri('https://repo.spring.io/snapshot') }  // 1.1.x 최신 기능을 위해
+}
+
+
+dependencies {
+    implementation platform("org.springframework.ai:spring-ai-bom:1.1.2")
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
+    // 2. Spring AI & Gemini (M5 기준 공식 명칭)
+	implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+    // 3. MCP Client
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
+	
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

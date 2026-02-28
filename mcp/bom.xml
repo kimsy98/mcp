@@ -1,0 +1,6 @@
+{
+  "errors" : [ {
+    "status" : 404,
+    "message" : "Could not find resource; Path: 'milestone:org/springframework/ai/spring-ai-bom/2.0.0-M2/spring-ai-bom-2.0.0-M2.pom'"
+  } ]
+}
