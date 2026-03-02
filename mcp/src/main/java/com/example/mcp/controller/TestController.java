@@ -12,8 +12,8 @@ public class TestController {
     private final ChatClient chatClient;
     private final ResearchService researchService;
 
-    public TestController(ChatClient.Builder chatClientBuilder, ResearchService resarchService) {
-        this.chatClient = chatClientBuilder.build();
+    public TestController(ChatClient chatClient, ResearchService resarchService) {
+        this.chatClient = chatClient;
         this.researchService = resarchService;
     }
 
@@ -24,8 +24,9 @@ public class TestController {
                 .call()
                 .content();
     }
+
     @GetMapping("/test-resarch")
-    public String testResearch(@RequestParam(defaultValue = "백엔드") String topic) {
-        return researchService.searchAcademicPapers(topic);
+    public String testResearch(@RequestParam(defaultValue = "백엔드") String topic, @RequestParam(defaultValue = "false") boolean saveResearch ) {
+        return researchService.searchAcademicPapers(topic, saveResearch);
     }
 }
