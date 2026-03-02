@@ -27,20 +27,25 @@ spring:
 - uv tool install arxiv-mcp-server(mcp 서버 설치)
 - application.yml 설정 스프링 구동시 자동으로 서버 올려서 연결함
   ```
- spring:
-    ai:
-      mcp:
-       client:
-        stdio:
-          connections:
-            arxiv-researcher:
-              command: cmd
-              args:
-                - "/c"
-                - "uv"
-                - "tool"
-                - "run"
-                - "arxiv-mcp-server"
-                - "--storage-path"
-                - "C:/Users/gkstj/Desktop/mcp/mcp/papers" # 파일 저장 위치
+     spring:
+        ai:
+          mcp:
+           client:
+            stdio:
+              connections:
+                arxiv-researcher:
+                  command: cmd
+                  args:
+                    - "/c"
+                    - "uv"
+                    - "tool"
+                    - "run"
+                    - "arxiv-mcp-server"
+                    - "--storage-path"
+                    - "C:/Users/gkstj/Desktop/mcp/mcp/papers" # 파일 저장 위치
   ```
+chatclient 빈 생성 시 defaultSystem 페르소나 설정, defaultToolCallbacks mcp 서버 주입, defaultAdvisors 대화 맥락 기억용 
+- SyncMcpToolCallbackProvider: MCP 서버가 제공하는 도구(예: arxiv_search, save_file)들을 Spring AI가 이해할 수 있는 FunctionCallback 형태로 자동 변환
+- MessageChatMemoryAdvisor: 대화가 오갈 때마다 이전 메시지들을 자동으로 프롬프트에 포함시켜 주는 역할
+- MessageWindowChatMemory: * Window 방식: 무한정 기억하는 것이 아니라, 최신 N개의 메시지만 '창(Window)' 안에 담아 기억
+기본 저장소: 별도의 설정이 없으면 **서버의 RAM(InMemory)**을 사용(추후에 이전에 가져온 자료 제외를 위해 db 연동 필요)
